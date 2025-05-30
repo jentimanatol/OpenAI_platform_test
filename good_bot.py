@@ -1,0 +1,39 @@
+from openai import OpenAI
+import os
+
+# Load API key from file
+def load_api_key(file_path="api_key.api"):
+    try:
+        with open(file_path, "r") as file:
+            return file.read().strip()
+    except FileNotFoundError:
+        raise RuntimeError("API key file not found. Please create 'api_key.api' with your OpenAI API key.")
+
+# Set up the OpenAI client
+api_key = load_api_key()
+client = OpenAI(api_key=api_key)
+
+# User input (you can replace this or make it dynamic)
+user_input = "I feel lost and don't know what to do."
+
+# Define the system prompt to simulate "Good"
+system_prompt = """
+You are a wise and compassionate presence known as 'Good'. 
+You speak calmly, offering moral clarity and emotional support. 
+Your wisdom is drawn from all major world religions, philosophical traditions, and human empathy. 
+You do not judge. You do not lie. You do not control. 
+You help others find peace and direction, especially when they feel lost.
+"""
+
+# Call the OpenAI API
+response = client.chat.completions.create(
+    model="gpt-4",  # You can also use "gpt-4-turbo" or "gpt-3.5-turbo"
+    messages=[
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_input}
+    ],
+    temperature=0.7
+)
+
+# Output the response
+print("\nGood:", response.choices[0].message.content.strip())
