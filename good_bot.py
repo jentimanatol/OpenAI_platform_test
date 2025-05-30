@@ -14,7 +14,11 @@ api_key = load_api_key()
 client = OpenAI(api_key=api_key)
 
 # User input (you can replace this or make it dynamic)
+
+# user_input = ""
+
 user_input = "I feel lost and don't know what to do."
+
 
 # Define the system prompt to simulate "Good"
 system_prompt = """
